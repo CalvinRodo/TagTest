@@ -20,4 +20,4 @@ jobs:
       - name:  Download file from s3 bucket
         run: |
           aws s3 sync s3://terraform-20220107184703837800000001 . --region=ca-central-1
-          echo foo.txt
+          cat foo.txt
