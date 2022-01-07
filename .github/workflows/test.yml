@@ -1,0 +1,23 @@
+# Sample workflow to access AWS resources when workflow is tied to branch
+# The workflow Creates static website using aws s3
+name: AWS example workflow
+on:
+  workflow_dispatch:
+
+# permission can be added at job level or workflow level    
+permissions:
+      id-token: write
+jobs:
+  S3PackageUpload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          role-to-assume: arn:aws:iam::009883649233:role/gh-oicd-aws
+          role-session-name: TagTestDemo
+          aws-region: 'ca-central-1'
+      - name:  Download file from s3 bucket
+        run: |
+          aws s3 sync s3://terraform-20220107184703837800000001 . --region=ca-central-1
+          echo foo.txt
